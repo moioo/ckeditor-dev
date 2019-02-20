@@ -431,6 +431,15 @@
 		finalizeCreation: function( container ) {
 			var wrapper = container.getFirst();
 			if ( wrapper && Widget.isDomWidgetWrapper( wrapper ) ) {
+				var range = this.editor.getSelection().getRanges()[ 0 ];
+				if ( range.checkReadOnly() ) {
+					var startParent = findNonEditableParent( range.startContainer ),
+						endParent = findNonEditableParent( range.endContainer );
+
+					startParent && range.setStartAfter( startParent );
+					endParent && range.setEndBefore( endParent );
+					range.select();
+				}
 				this.editor.insertElement( wrapper );
 
 				var widget = this.getByElement( wrapper );
@@ -438,6 +447,19 @@
 				widget.ready = true;
 				widget.fire( 'ready' );
 				widget.focus();
+			}
+
+			function findNonEditableParent( node ) {
+				while ( node ) {
+					if ( node.type == CKEDITOR.NODE_ELEMENT ) {
+						if ( node.getAttribute( 'contentEditable' ) == 'false' && !node.data( 'cke-editable' ) ) {
+							return node;
+						}
+					}
+					node = node.getParent();
+				}
+
+				return null;
 			}
 		},
 
