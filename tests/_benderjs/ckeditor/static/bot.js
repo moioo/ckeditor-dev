@@ -139,7 +139,7 @@
 
 			btnEl = CKEDITOR.document.getById( btn._.id );
 
-			bender.tools.fireElementEventHandler( btnEl, CKEDITOR.env.ie ? 'onmouseup' : 'onclick', { button: leftMouseButton } );
+			CKEDITOR.tools.fireElementEventHandler( btnEl, CKEDITOR.env.ie ? 'onmouseup' : 'onclick', { button: leftMouseButton } );
 
 			// combo panel opening is synchronous.
 			tc.wait();
@@ -228,7 +228,7 @@
 			item = CKEDITOR.document.getById( 'cke_' + combo.id );
 			item = item.getElementsByTag( 'a' ).getItem( 0 );
 			//item.$[ CKEDITOR.env.ie ? 'onmouseup' : 'onclick' ]();
-			bender.tools.fireElementEventHandler( item, CKEDITOR.env.ie ? 'onmouseup' : 'onclick', { button: leftMouseButton } );
+			CKEDITOR.tools.fireElementEventHandler( item, CKEDITOR.env.ie ? 'onmouseup' : 'onclick', { button: leftMouseButton } );
 
 			// combo panel opening is synchronous.
 			tc.wait();
