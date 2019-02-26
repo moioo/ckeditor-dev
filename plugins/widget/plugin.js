@@ -451,10 +451,8 @@
 
 			function findNonEditableParent( node ) {
 				while ( node ) {
-					if ( node.type == CKEDITOR.NODE_ELEMENT ) {
-						if ( node.getAttribute( 'contentEditable' ) == 'false' && !node.data( 'cke-editable' ) ) {
-							return node;
-						}
+					if ( node.type == CKEDITOR.NODE_ELEMENT && node.getAttribute( 'contentEditable' ) == 'false' && !node.data( 'cke-editable' ) ) {
+						return node;
 					}
 					node = node.getParent();
 				}
