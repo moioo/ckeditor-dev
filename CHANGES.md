@@ -3,6 +3,10 @@
 
 ## CKEditor 4.11.4
 
+Fixed Issues:
+
+* [#2517](https://github.com/ckeditor/ckeditor-dev/issues/2517): [Chrome,Firefox] Fixed: Error thrown when inserting [Widget](https://ckeditor.com/cke4/addon/widget) from dialog.
+
 ## CKEditor 4.11.3
 
 Fixed Issues:
