@@ -3,6 +3,8 @@
 
 ## CKEditor 4.11.4
 
+* [#2775](https://github.com/ckeditor/ckeditor-dev/issues/2775): Fixed: [Clipboard](https://ckeditor.com/cke4/addon/clipboard) Paste buttons had wrong state when [Read-Only](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_readonly.html) mode was set by mouse event listener with [Div Editing Area](https://ckeditor.com/cke4/addon/divarea) plugin.
+
 ## CKEditor 4.11.3
 
 Fixed Issues:
