@@ -431,16 +431,18 @@
 		finalizeCreation: function( container ) {
 			var wrapper = container.getFirst();
 			if ( wrapper && Widget.isDomWidgetWrapper( wrapper ) ) {
-				var range = this.editor.getSelection().getRanges()[ 0 ];
-				if ( range.checkReadOnly() ) {
-					var startParent = findNonEditableParent( range.startContainer ),
-						endParent = findNonEditableParent( range.endContainer );
+				var editor = this.editor,
+					range = this.editor.getSelection().getRanges()[ 0 ];
 
-					startParent && range.setStartAfter( startParent );
-					endParent && range.setEndBefore( endParent );
+				if ( range.checkReadOnly() ) {
+					var startParent = findOuterNonEditableAncestor( range.startContainer ),
+						endParent = findOuterNonEditableAncestor( range.endContainer );
+
+					moveContainerOutOfReadOnly( startParent, true );
+					moveContainerOutOfReadOnly( endParent );
 					range.select();
 				}
-				this.editor.insertElement( wrapper );
+				editor.insertElement( wrapper );
 
 				var widget = this.getByElement( wrapper );
 				// Fire postponed #ready event.
@@ -449,15 +451,46 @@
 				widget.focus();
 			}
 
-			function findNonEditableParent( node ) {
-				while ( node ) {
-					if ( node.type == CKEDITOR.NODE_ELEMENT && node.getAttribute( 'contentEditable' ) == 'false' && !node.data( 'cke-editable' ) ) {
-						return node;
-					}
-					node = node.getParent();
+			/**
+			 * @param node
+			 * @returns {CKEDITOR.dom.node/null} Closest non editable ancestor which is direct child of editable element otherwise `null`.
+			 */
+			function findOuterNonEditableAncestor( node ) {
+				var parents = node.getParents().reverse(),
+					done = false,
+					nonEditableParents = CKEDITOR.tools.array.filter( parents, function( node ) {
+							if ( !done && node.type == CKEDITOR.NODE_ELEMENT && node.getAttribute( 'contentEditable' ) == 'false' && !node.data( 'cke-editable' ) ) {
+								return true;
+							}
+
+							done = true;
+							return false;
+						} ),
+					length = nonEditableParents.length;
+
+				if ( length ) {
+					return nonEditableParents[ length - 1 ];
 				}
 
 				return null;
+			}
+
+			function moveContainerOutOfReadOnly( node, start ) {
+				if ( !node ) {
+					return;
+				}
+
+				var targetSibling = node[ start ? 'getNext' : 'getPrevious' ]();
+
+				if ( !node.equals( editor.editable() ) && targetSibling ) {
+					if ( start ) {
+						range.setStartAt( targetSibling, CKEDITOR.POSITION_AFTER_START );
+					} else {
+						range.setEndAt( targetSibling, CKEDITOR.POSITION_BEFORE_END );
+					}
+				} else {
+					range[ 'set' + ( start ? 'StartAfter' : 'EndBefore' ) ]( node );
+				}
 			}
 		},
 
