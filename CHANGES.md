@@ -5,7 +5,7 @@
 
 Fixed Issues:
 
-* [#2816](https://github.com/ckeditor/ckeditor-dev/issues/2816): Fixed: [Enhanced Image](https://ckeditor.com/cke4/addon/image2) resize handler is visible after manually setting [Read-Only Mode](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_readonly.html).
+* [#2816](https://github.com/ckeditor/ckeditor-dev/issues/2816), [#2874](https://github.com/ckeditor/ckeditor-dev/issues/2874): Fixed: [Enhanced Image](https://ckeditor.com/cke4/addon/image2) resize handler is visible after manually setting [Read-Only Mode](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_readonly.html).
 
 ## CKEditor 4.11.3
 
