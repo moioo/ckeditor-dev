@@ -6,6 +6,7 @@
 Fixed Issues:
 
 * [#1397](https://github.com/ckeditor/ckeditor-dev/issues/1397): Fixed: Using dialog to remove headers from the [table](https://ckeditor.com/cke4/addon/table) with one headers row only throws an error.
+* [#1901](https://github.com/ckeditor/ckeditor-dev/issues/1901): Fixed: Can not open context menu with keyboard shortcut over [widget](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_widgets.html).
 
 ## CKEditor 4.11.3
 
