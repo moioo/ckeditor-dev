@@ -841,7 +841,7 @@
 
 	CKEDITOR.plugins.add( 'imagebase', {
 		requires: 'widget,filetools',
-		lang: 'en',
+		lang: 'en,zh-cn',
 
 		init: function( editor ) {
 			loadStyles( editor, this );

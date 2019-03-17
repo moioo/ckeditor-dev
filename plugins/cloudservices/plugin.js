@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
@@ -78,16 +78,21 @@
 			var tokenUrl = editor.config.cloudServices_tokenUrl,
 				tokenFetcher = {
 					token: null,
+					tokenObject: null,
 
 					// Allow external code (tests) to affect token refresh interval if needed.
-					REFRESH_INTERVAL: editor.CLOUD_SERVICES_TOKEN_INTERVAL || 3600000,
+					REFRESH_INTERVAL: 60000,
 
 					refreshToken: function() {
-						CKEDITOR.ajax.load( tokenUrl, function( token ) {
-							if ( token ) {
-								tokenFetcher.token = token;
-							}
-						} );
+						var now = (Date.parse(new Date()) / 1000) + 3;
+						if (tokenFetcher.tokenObject === null || tokenFetcher.tokenObject.expire < now){
+							CKEDITOR.ajax.load( tokenUrl, function( token ) {
+								if ( token ) {
+									tokenFetcher.token = token;
+									tokenFetcher.tokenObject = JSON.parse(token)
+								}
+							} );
+						}
 					},
 
 					init: function() {
@@ -114,8 +119,8 @@
 
 				if ( fileLoader instanceof CKEDITOR.plugins.cloudservices.cloudServicesLoader ) {
 					// Cloud Services expect file to be put as a "file" property.
-					reqData.file = reqData.upload;
-					delete reqData.upload;
+					// reqData.file = reqData.upload;
+					// delete reqData.upload;
 
 					if ( !token ) {
 						CKEDITOR.error( 'cloudservices-no-token' );
@@ -123,7 +128,9 @@
 						return;
 					}
 					// Add authorization token.
-					evt.data.fileLoader.xhr.setRequestHeader( 'Authorization', token );
+					//evt.data.fileLoader.xhr.setRequestHeader( 'Authorization', token );
+					fileLoader.editor.config.refreshToken(fileLoader.editor.config.providerConfig, token);
+					//reqData.token = token
 				}
 			}, null, null, 6 );
 
@@ -134,11 +141,9 @@
 
 				if ( fileLoader instanceof CKEDITOR.plugins.cloudservices.cloudServicesLoader ) {
 					evt.stop();
-
 					try {
 						response = JSON.parse( xhr.responseText );
-
-						evt.data.response = response;
+						evt.data.response = fileLoader.editor.config.parseFileUploadResponse(response, fileLoader.editor.config.providerConfig);
 					} catch ( e ) {
 						CKEDITOR.warn( 'filetools-response-error', { responseText: xhr.responseText } );
 					}

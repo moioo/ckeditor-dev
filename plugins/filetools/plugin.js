@@ -51,20 +51,24 @@
 					requestData = evt.data.requestData,
 					configXhrHeaders = editor.config.fileTools_requestHeaders,
 					header;
-
+				var file, fileName;
 				for ( var name in requestData ) {
 					var value = requestData[ name ];
 
 					// Treating files in special way
 					if ( typeof value === 'object' && value.file ) {
-						$formData.append( name, value.file, value.name );
+						//$formData.append( name, value.file, value.name );
+						file = value.file
+						fileName = value.name
 					}
 					else {
-						$formData.append( name, value );
+						//$formData.append( name, value );
 					}
 				}
+				fileLoader.editor.config.beforeFileUploadRequest($formData, file, fileName, fileLoader.editor.config.providerConfig);
+
 				// Append token preventing CSRF attacks.
-				$formData.append( 'ckCsrfToken', CKEDITOR.tools.getCsrfToken() );
+				// $formData.append( 'ckCsrfToken', CKEDITOR.tools.getCsrfToken() );
 
 				if ( configXhrHeaders ) {
 					for ( header in configXhrHeaders ) {

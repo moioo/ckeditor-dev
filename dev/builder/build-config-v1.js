@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
@@ -35,17 +35,13 @@ var CKBUILDER_CONFIG = {
 	],
 	plugins: {
 		a11yhelp: 1,
-		ajax: 1,
 		about: 1,
 		basicstyles: 1,
 		bidi: 1,
 		blockquote: 1,
-		balloontoolbar: 1,
-		balloonpanel: 1,
 		clipboard: 1,
 		colorbutton: 1,
 		colordialog: 1,
-		cloudservices: 1,
 		copyformatting: 1,
 		contextmenu: 1,
 		dialogadvtab: 1,
@@ -53,7 +49,6 @@ var CKBUILDER_CONFIG = {
 		elementspath: 1,
 		enterkey: 1,
 		entities: 1,
-		easyimage : 1,
 		filebrowser: 1,
 		find: 1,
 		flash: 1,
@@ -65,7 +60,6 @@ var CKBUILDER_CONFIG = {
 		htmlwriter: 1,
 		iframe: 1,
 		image: 1,
-		imagebase: 1,
 		indentlist: 1,
 		indentblock: 1,
 		justify: 1,
@@ -99,7 +93,6 @@ var CKBUILDER_CONFIG = {
 		toolbar: 1,
 		undo: 1,
 		uploadimage: 1,
-		xml: 1,
 		wysiwygarea: 1
 	},
 	languages : {
